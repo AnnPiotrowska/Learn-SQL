@@ -1,0 +1,158 @@
+
+SELECT ... FROM ... WHERE ... GROUP BY ... ORDER BY ... ASC/DESC ... LIMIT ... ;
+
+
+--DISTINCT
+
+SELECT DISTINCT [type] 
+FROM movies;
+
+
+--LIMIT clause
+
+--dane dziesiêciu najdro¿szych modeli telefonów
+SELECT * 
+FROM cell_phones 
+ORDER BY price DESC 
+LIMIT 0,10;
+
+--wybrac rekordy od miejsca 21 do 30
+SELECT brand, model, price 
+FROM cell_phones 
+ORDER BY price DESC 
+LIMIT 20,10;     
+
+
+--WHERE clause
+
+SELECT * 
+FROM cell_phones 
+WHERE color = 'black' AND price <= 300;
+
+SELECT title, year 
+FROM movies 
+WHERE year BETWEEN '1990' AND '1999'  --obejmuje zakres pomiêdzy podanymi wartoœciami w³¹cznie z nimi
+ORDER BY year;
+
+SELECT * 
+FROM movies 
+WHERE director ='Ridley Scott' OR director = 'Tony Scott';
+
+SELECT * 
+FROM cell_phones 
+WHERE brand IN ('Apple', 'Samsung', 'Microsoft');
+
+SELECT * 
+FROM famous_cats 
+WHERE origin NOT IN ('Garfield', 'Smurfs', 'Tom & Jerry');
+
+
+--Subqueries
+
+--z tabeli cell_phones wybierz telefony Twoich ulubionych marek
+SELECT * 
+FROM cell_phones 
+WHERE brand IN ( SELECT brand FROM favorite_brands );
+
+--- z tabeli movies wyœwietl wszystkie filmy, których id nie ma w tabeli my_movies
+SELECT * 
+FROM movies 
+WHERE id NOT IN (SELECT id FROM my_movies); 
+
+
+--LIKE/ NOT LIKE operator
+--operator that determines if a character string matches a specified pattern
+
+--Wildcards:
+--% (percent) represents any string of zero or more characters
+--_  (underscore) represents any single character
+
+--filmy, których tytu³y zaczynaj¹ siê od litery 'A'
+SELECT * 
+FROM movies 
+WHERE title LIKE 'A%';
+
+--w których druga litera nazwiska re¿ysera to 'r’
+SELECT * 
+FROM movies 
+WHERE director LIKE '_r%';
+
+--z tabeli movies wybierz filmy, w których zagra³ Clint Eastwood, ale których nie re¿yserowa³
+SELECT * 
+FROM movies 
+WHERE [cast] LIKE '%Clint Eastwood%' AND director <> 'Clint Eastwood';
+
+--wybierz wszystkie filmy, w których nie zagra³ Tom Cruise
+SELECT * 
+FROM movies 
+WHERE [cast] NOT LIKE '%Tom Cruise%';
+
+--z tabeli movies wybierz filmy, które maj¹ tytu³y jednocz³onowe 
+SELECT * 
+FROM movies 
+WHERE title NOT LIKE '% %';
+
+
+AGGREGATE FUNCTIONS
+
+MAX () - returns the maximum value
+MIN () - returns the minimum value
+COUNT () returns the number of rows (NULL not included)
+SUM () - returns the total
+AVG () - returns the average
+
+--oblicz ile rekordów z tabeli movies zawiera ocenê (pole rating) mieszcz¹c¹ siê w przedziale od 7.5 do 8.5 w³¹cznie z tymi wartoœciami
+SELECT COUNT(rating) 
+FROM movies 
+WHERE rating BETWEEN '7.5' AND '8.5';
+
+--oblicz ile roznych marek (pole brand) zawiera tabela cell_phones
+SELECT COUNT(DISTINCT brand) 
+FROM cell_phones;
+
+--pobierz œredni¹ cenê telefonów marki Apple
+SELECT AVG(price) 
+FROM cell_phones 
+WHERE brand = 'Apple';
+
+--wyœwietl tytu³y i oceny tych filmów z tabeli movies, których ocena jest wiêksza lub równa œredniej z Twoich ocen wszystkich filmów z tabeli my_movies
+SELECT title,rating 
+FROM movies 
+WHERE rating >= (SELECT AVG(my_rating) FROM my_movies) 
+ORDER BY rating DESC;
+
+--obliczenia sumarycznej wartoœci mandatów wystawionych w Chicago
+SELECT SUM(fine) 
+FROM tickets 
+WHERE location ='Chicago';
+
+--oblicz na jak¹ sumê dosta³ mandaty Fletcher Reede w Los Angeles
+SELECT SUM(fine) 
+FROM tickets 
+WHERE location = 'Los Angeles' AND driver_id = (select ID from drivers where first_name = "Fletcher" AND family_name = "Reede");
+
+--najni¿sz¹ cenê spoœród modeli telefonów z systemem operacyjnym innym ni¿ Android
+SELECT MIN(price) 
+FROM cell_phones 
+WHERE system <> 'Android'; 		--WHERE system NOT LIKE 'Android'
+
+--rozmiar najwiêkszego ekranu spoœród modeli, które nie s¹ koloru czerwonego, niebieskiego ani ró¿owego;
+SELECT MAX(screen) 
+FROM cell_phones 
+WHERE color NOT IN ('red','blue','pink');
+
+
+--GROUP BY
+
+--ilu bohaterów z poszczególnych bajek zawiera tabela famous_cats
+SELECT origin, COUNT(id) 
+FROM famous_cats 
+GROUP BY origin;
+
+--z tabeli cell_phones uzyskaj liczby modeli dla poszczególnych systemów operacyjnych
+SELECT system, COUNT(id) 
+FROM cell_phones 
+GROUP BY system 
+ORDER BY COUNT (id) DESC;
+
+
