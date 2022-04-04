@@ -10,7 +10,7 @@ FROM movies;
 
 --LIMIT clause
 
---dane dziesiêciu najdro¿szych modeli telefonów
+--dane dziesieciu najdrozszych modeli telefonow
 SELECT * 
 FROM cell_phones 
 ORDER BY price DESC 
@@ -31,7 +31,7 @@ WHERE color = 'black' AND price <= 300;
 
 SELECT title, year 
 FROM movies 
-WHERE year BETWEEN '1990' AND '1999'  --obejmuje zakres pomiêdzy podanymi wartoœciami w³¹cznie z nimi
+WHERE year BETWEEN '1990' AND '1999'  --obejmuje zakres pomiedzy podanymi wartosciami wlacznie z nimi
 ORDER BY year;
 
 SELECT * 
@@ -54,7 +54,7 @@ SELECT *
 FROM cell_phones 
 WHERE brand IN ( SELECT brand FROM favorite_brands );
 
---- z tabeli movies wyœwietl wszystkie filmy, których id nie ma w tabeli my_movies
+--- z tabeli movies wyswietl wszystkie filmy, ktorych id nie ma w tabeli my_movies
 SELECT * 
 FROM movies 
 WHERE id NOT IN (SELECT id FROM my_movies); 
@@ -67,27 +67,27 @@ WHERE id NOT IN (SELECT id FROM my_movies);
 --% (percent) represents any string of zero or more characters
 --_  (underscore) represents any single character
 
---filmy, których tytu³y zaczynaj¹ siê od litery 'A'
+--filmy, ktorych tytuly zaczynaja sie od litery 'A'
 SELECT * 
 FROM movies 
 WHERE title LIKE 'A%';
 
---w których druga litera nazwiska re¿ysera to 'r’
+--w ktorych druga litera nazwiska rezysera to 'r’
 SELECT * 
 FROM movies 
 WHERE director LIKE '_r%';
 
---z tabeli movies wybierz filmy, w których zagra³ Clint Eastwood, ale których nie re¿yserowa³
+--z tabeli movies wybierz filmy, w ktorych zagral Clint Eastwood, ale ktorych nie rezyserowal
 SELECT * 
 FROM movies 
 WHERE [cast] LIKE '%Clint Eastwood%' AND director <> 'Clint Eastwood';
 
---wybierz wszystkie filmy, w których nie zagra³ Tom Cruise
+--wybierz wszystkie filmy, w ktorych nie zagral Tom Cruise
 SELECT * 
 FROM movies 
 WHERE [cast] NOT LIKE '%Tom Cruise%';
 
---z tabeli movies wybierz filmy, które maj¹ tytu³y jednocz³onowe 
+--z tabeli movies wybierz filmy, ktore maja tytuly jednoczlonowe 
 SELECT * 
 FROM movies 
 WHERE title NOT LIKE '% %';
@@ -101,7 +101,7 @@ COUNT () returns the number of rows (NULL not included)
 SUM () - returns the total
 AVG () - returns the average
 
---oblicz ile rekordów z tabeli movies zawiera ocenê (pole rating) mieszcz¹c¹ siê w przedziale od 7.5 do 8.5 w³¹cznie z tymi wartoœciami
+--oblicz ile rekordow z tabeli movies zawiera ocene (pole rating) mieszczaca sie w przedziale od 7.5 do 8.5 wlacznie z tymi wartosciami
 SELECT COUNT(rating) 
 FROM movies 
 WHERE rating BETWEEN '7.5' AND '8.5';
@@ -110,33 +110,33 @@ WHERE rating BETWEEN '7.5' AND '8.5';
 SELECT COUNT(DISTINCT brand) 
 FROM cell_phones;
 
---pobierz œredni¹ cenê telefonów marki Apple
+--pobierz srednia cene telefonow marki Apple
 SELECT AVG(price) 
 FROM cell_phones 
 WHERE brand = 'Apple';
 
---wyœwietl tytu³y i oceny tych filmów z tabeli movies, których ocena jest wiêksza lub równa œredniej z Twoich ocen wszystkich filmów z tabeli my_movies
+--wyswietl tytuly i oceny tych filmow z tabeli movies, ktorych ocena jest wieksza lub rowna sredniej z Twoich ocen wszystkich filmow z tabeli my_movies
 SELECT title,rating 
 FROM movies 
 WHERE rating >= (SELECT AVG(my_rating) FROM my_movies) 
 ORDER BY rating DESC;
 
---obliczenia sumarycznej wartoœci mandatów wystawionych w Chicago
+--obliczenia sumarycznej wartosci mandatow wystawionych w Chicago
 SELECT SUM(fine) 
 FROM tickets 
 WHERE location ='Chicago';
 
---oblicz na jak¹ sumê dosta³ mandaty Fletcher Reede w Los Angeles
+--oblicz na jaka sume dostal mandaty Fletcher Reede w Los Angeles
 SELECT SUM(fine) 
 FROM tickets 
 WHERE location = 'Los Angeles' AND driver_id = (select ID from drivers where first_name = "Fletcher" AND family_name = "Reede");
 
---najni¿sz¹ cenê spoœród modeli telefonów z systemem operacyjnym innym ni¿ Android
+--najnizsza cene sposrod modeli telefonow z systemem operacyjnym innym niz Android
 SELECT MIN(price) 
 FROM cell_phones 
 WHERE system <> 'Android'; 		--WHERE system NOT LIKE 'Android'
 
---rozmiar najwiêkszego ekranu spoœród modeli, które nie s¹ koloru czerwonego, niebieskiego ani ró¿owego;
+--rozmiar najwiekszego ekranu sposrod modeli, ktore nie sa koloru czerwonego, niebieskiego ani rozowego;
 SELECT MAX(screen) 
 FROM cell_phones 
 WHERE color NOT IN ('red','blue','pink');
@@ -144,12 +144,12 @@ WHERE color NOT IN ('red','blue','pink');
 
 --GROUP BY
 
---ilu bohaterów z poszczególnych bajek zawiera tabela famous_cats
+--ilu bohaterow z poszczegolnych bajek zawiera tabela famous_cats
 SELECT origin, COUNT(id) 
 FROM famous_cats 
 GROUP BY origin;
 
---z tabeli cell_phones uzyskaj liczby modeli dla poszczególnych systemów operacyjnych
+--z tabeli cell_phones uzyskaj liczby modeli dla poszczegolnych systemow operacyjnych
 SELECT system, COUNT(id) 
 FROM cell_phones 
 GROUP BY system 
