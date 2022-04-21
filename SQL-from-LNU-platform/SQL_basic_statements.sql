@@ -2,9 +2,8 @@
 --Basic SQL statements
 ----------------------
 
---------------
+
 --LIMIT clause
---------------
 
 --ten most expensive phone models
 SELECT * 
@@ -18,9 +17,8 @@ FROM cell_phones
 ORDER BY price DESC 
 LIMIT 20,10;     
 
---------------
+
 --WHERE clause
---------------
 
 SELECT * 
 FROM cell_phones 
@@ -55,9 +53,8 @@ SELECT *
 FROM movies 
 WHERE id NOT IN (SELECT id FROM my_movies); 
 
--------------------------
+
 --LIKE/ NOT LIKE operator
--------------------------
 --operator that determines if a character string matches a specified pattern
 
 --Wildcards:
@@ -89,9 +86,9 @@ SELECT *
 FROM movies 
 WHERE title NOT LIKE '% %';
 
----------------------
+
 --AGGREGATE FUNCTIONS
----------------------
+
 --MAX () - returns the maximum value
 --MIN () - returns the minimum value
 --COUNT () returns the number of rows (NULL not included)
@@ -138,9 +135,8 @@ SELECT MAX(screen)
 FROM cell_phones 
 WHERE color NOT IN ('red','blue','pink');
 
-----------
+
 --GROUP BY
-----------
 
 --how many heroes from each fairy tale contains the famous_cats table
 SELECT origin, COUNT(id) 
@@ -169,9 +165,8 @@ GROUP BY location
 ORDER BY AVG(fine) DESC 
 LIMIT 0,3;
 
---------
+
 --HAVING
---------
 
 --calculate the sum of the value of fines for individual cities, but only for those with at least three fines (include tickets issued after 1991)
 SELECT location, SUM(fine) AS total 
