@@ -1,8 +1,6 @@
-
 ---------------------------
 --SQL additional techniques
 ---------------------------
-
 
 --CASE statement
 --goes through conditions and returns a value when the first condition is met
@@ -55,15 +53,48 @@ FROM authors
 WHERE middle_name IS NOT NULL;
 
 
-
 --IFNULL() function
 --return the specified value IF the expression is NULL, otherwise return the expression
 
 SELECT IFNULL( NULL, 300);
---300
+--result: 300
 
 SELECT IFNULL( 100, 300);
---100
+--result: 100
 
 SELECT nazwisko, IFNULL( data_œmierci, "autor ¿yje" ) AS data_œmierci 
 FROM autorzy;
+
+SELECT brand, model, system, IFNULL(discount_price, regular_price) AS price 
+FROM cell_phones;
+
+
+--COALESCE() function
+--returns the first non-NULL value from a series of expressions
+
+SELECT COALESCE( NULL, NULL, 300 )
+--result: 300
+
+SELECT COALESCE( 100, NULL, NULL, 300 )
+--result: 100
+
+SELECT name, COALESCE(tel, email, fax, "no data") AS contact 
+FROM famous_cats;
+
+
+--NULLIF() function
+--returns the first expression if the two expressions are not equal
+--if the expressions are equal, NULLIF returns a null value
+
+SELECT NULLIF( 5, 5 )
+--result: null
+
+SELECT NULLIF( 5, 8 )
+--result: 5
+
+--display in a single column the number of records where the values in field A and field B do not equal
+SELECT COUNT(NULLIF (A,B)) AS [not equal] 
+FROM pressure;
+
+
+
