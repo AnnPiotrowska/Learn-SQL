@@ -230,4 +230,3 @@ JOIN region r
 	ON r.id = s.region_id
 GROUP BY r.name, w.channel
 ORDER BY num_events DESC;
-
