@@ -1,7 +1,5 @@
-# Learn SQL
-This repository contains my study notes on SQL.
+## Learn SQL
 
-***
-## Course SQL Level 1 and Level 2 from LNU platform 
+This repository contains my study notes on SQL commands taught in the Course SQL from [the League of Extraordinary Minds platform] (https://www.lnu.org.pl/)
 
-on the League of Extraordinary Minds platform
+In this SQL course, I use the SQLite engine.
